@@ -47,8 +47,51 @@ Structure du dépôt (extrait)
 ---------------------------
 - `bin/` : code source C++ et `makefile`.
 - `Tests/` : jeux de tests et scripts d'exécution.
-- `LogDeTests/` : historiques ou sorties de tests.
+- `LogDeTests/` : fichiers de logs Apache de test (voir section ci-dessous).
 - `manpage` : page de manuel exécutable via `man ./manpage`.
+
+Dossier LogDeTests
+------------------
+Le dossier `LogDeTests/` contient des fichiers de logs Apache au format standard, utilisés comme données d'entrée pour tester le programme `analog`.
+
+### Contenu
+Chaque fichier `.log` contient des lignes au format Apache :
+```
+192.168.0.0 - - [08/Sep/2012:11:16:02 +0200] "GET /docB.html HTTP/1.1" 200 12106 "/docA.html" "Mozilla/5.0"
+```
+
+Ces fichiers permettent de simuler différents scénarios :
+- Navigation entre plusieurs pages web
+- Requêtes sur différentes ressources (HTML, images, CSS, JS)
+- Requêtes à différentes heures et dates
+
+### Utilisation
+Pour tester manuellement le programme avec un fichier de log :
+
+```bash
+cd bin
+./analog ../LogDeTests/log1.log
+```
+
+Pour générer un graphe au format DOT :
+
+```bash
+./analog -g graphe.dot ../LogDeTests/log1.log
+```
+
+Pour filtrer par heure (ex. 11h) :
+
+```bash
+./analog -t 11 ../LogDeTests/log1.log
+```
+
+Pour afficher les N pages les plus consultées :
+
+```bash
+./analog -n 5 ../LogDeTests/log1.log
+```
+
+Ces fichiers sont également utilisés automatiquement par les scripts de tests dans `Tests/`.
 
 Licence / Auteurs
 ------------------
