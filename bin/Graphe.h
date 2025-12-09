@@ -19,8 +19,8 @@ using namespace std;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Graphe>
-//
-//
+// Encapsule un graphe orienté représentant les liens entre pages web
+// Gère l'ajout de liens et le tri des nœuds par popularité
 //------------------------------------------------------------------------
 
 class Graphe
@@ -30,24 +30,26 @@ class Graphe
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    bool AjouterLien( string labelPre, string labelNoeud, bool detail = true);
+    bool AjouterLien( string labelSource, string labelCible, bool avecDetails = true);
     // Mode d'emploi : 
-    // Ajoute un lien entre les deux Noeuds mentionnés dans la structure si detail est à True,
-    // ne fait qu'incrémenter le nombre d'accès à la cible sinon
-    // Contrat : 
-    // Si un des noms a déjà été ajouté précédemment dans la structure alors il correspond au même Noeud
+    // Ajoute un lien orienté entre deux nœuds (source -> cible)
+    // Si 'avecDetails' est true, stocke les détails du lien dans la structure
+    // Crée automatiquement les nœuds s'ils n'existent pas déjà
+    // Retourne toujours true
+    // Contrat : Si un label a déjà été utilisé, il désigne le même nœud
 
-    const vector < Noeud > GetPlusConnectes( int n ) const;
+    const vector < Noeud > GetPlusConnectes( int nombreNoeuds ) const;
     // Mode d'emploi : 
-    // Renvoie les n Noeuds les plus consultés dans un tableau
-    // si n >= nombreNoeuds alors tous les éléments sont renvoyés
-    // si n est negatif alors tous les éléments sont renvoyés
-    // Contrat : 
+    // Retourne les 'nombreNoeuds' nœuds les plus consultés, triés par ordre décroissant
+    // Si 'nombreNoeuds' est négatif ou supérieur au total, retourne tous les nœuds
+    // Le tri s'effectue d'abord par nombre d'accès, puis par label en cas d'égalité
+    // Contrat : Aucun 
 
     const map < string , Noeud > & GetStructure();
     // Mode d'emploi : 
-    // Renvoie la structure de données contenant tous les liens entre Noeuds
-    // Contrat :
+    // Retourne la map contenant tous les nœuds du graphe
+    // Clé = label du nœud, Valeur = objet Noeud
+    // Contrat : Aucun
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -67,15 +69,13 @@ public:
 
     Graphe ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Constructeur par défaut, initialise un graphe vide
+    // Contrat : Aucun
 
     virtual ~Graphe ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Destructeur, libère les ressources du graphe
+    // Contrat : Aucun
 
 //------------------------------------------------------------------ PRIVE
 

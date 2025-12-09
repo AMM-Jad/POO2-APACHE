@@ -19,8 +19,8 @@ using namespace std;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Noeud>
-//
-//
+// Représente un nœud dans un graphe orienté
+// Encapsule le label, les liens entrants et le compteur d'accès
 //------------------------------------------------------------------------
 
 class Noeud
@@ -29,36 +29,40 @@ class Noeud
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    void AjouterLien( string referer , bool details);
+    void AjouterLien( string sourceReferer, bool avecDetails);
     // Mode d'emploi : 
-    // Ajoute un lien du referer au doc dans la structure associée si details = true
-    // Ne fait qu'incrémenter le nombre d'accès du doc sinon. 
-    // Contrat :
-    // Si le nom du referer a déjà été passé en paramètre de cette méthode alors il correspond au même Noeud 
+    // Enregistre un accès au nœud depuis la source 'sourceReferer'
+    // Si 'avecDetails' est true, stocke le lien dans la structure avec son poids
+    // Sinon, incrémente uniquement le compteur total d'accès
+    // Contrat : Si 'sourceReferer' a déjà été passé, il correspond au même nœud source 
 
     unsigned int GetNombreLiens() const;
     // Mode d'emploi : 
-    // Renvoie le nombre de fois que le Noeud a été consulté
-    // Contrat :
+    // Retourne le nombre total d'accès au nœud (poids total de tous les liens entrants)
+    // Contrat : Aucun
 
     unsigned int GetNumNoeud() const;
+    // Mode d'emploi :
+    // Retourne le numéro unique d'identification du nœud
+    // Ce numéro est attribué automatiquement à la création
+    // Contrat : Aucun
 
     const map < string, int > & GetStructure() const;
     // Mode d'emploi :
-    // Renvoie les liens encapsulés dans le Noeud
-    // Contrat : 
-    
+    // Retourne la map contenant tous les liens entrants vers ce nœud
+    // Clé = label du nœud source, Valeur = poids du lien (nombre d'accès)
+    // Contrat : Aucun
 
     const string GetLabel() const;
     // Mode d'emploi : 
-    // Renvoie le label du Noeud
-    // Contrat :
+    // Retourne le label (nom) du nœud
+    // Contrat : Aucun
 
-    int GetAccesDepuisSource( string source ) const;
+    int GetAccesDepuisSource( string labelSource ) const;
     // Mode d'emploi : 
-    // Renvoie la valeur sur l'arc entre la source et le noeud si cet arc existe, -1 sinon
-    // Contrat : 
-    //
+    // Retourne le poids du lien entre 'labelSource' et ce nœud
+    // Retourne -1 si aucun lien n'existe depuis cette source
+    // Contrat : Aucun
 
 //------------------------------------------------- Surcharge d'opérateurs
     /*Noeud & operator = ( const Noeud & unNoeud );
@@ -66,11 +70,11 @@ public:
     //
     // Contrat :
     //*/
-    bool operator > ( const Noeud & aComparer ) const ;
+    bool operator > ( const Noeud & noeudAComparer ) const ;
     // Mode d'emploi : 
-    // Compare le Noeud courant et celui passé en paramètre par rappport à leur nombre d'accès puis par rapport à leur nom
-    // Contrat : 
-    // 
+    // Compare deux nœuds : d'abord par nombre d'accès, puis par label (ordre lexicographique)
+    // Retourne true si le nœud courant est supérieur à 'noeudAComparer'
+    // Contrat : Aucun 
 
 
 //------------ groupe "com.google.code.gson", version 2.8.52.artfact "htpclient" du groupe "org.apache.htpcomponents", version 4.5.7Pour exploiter cete API, la classe AstroTest est fournie sur Moodle: elle montre commentdemander le calcul du profl astrologique-------------------------------- Constructeurs - destructeur
@@ -81,18 +85,17 @@ public:
     //*/
     Noeud ( );
     // Mode d'emploi : 
-    // Construit un Noeud par défaut avec le nom DEFAULT
+    // Constructeur par défaut, crée un nœud avec le label "DEFAULT"
+    // Contrat : Aucun
     Noeud ( string labelNoeud);
     // Mode d'emploi :
-    // Construit un Noeud avec le nom passé en paramètre
-    // Contrat :
-    //
+    // Constructeur, crée un nœud avec le label spécifié
+    // Contrat : Aucun
 
     virtual ~Noeud ( );
     // Mode d'emploi :
-    // Detruit l'objet appelant
-    // Contrat :
-    //
+    // Destructeur, libère les ressources du nœud
+    // Contrat : Aucun
 
 //------------------------------------------------------------------ PRIVE
 

@@ -27,6 +27,8 @@ const string REFERER_LOCAL = "http://intranet-if.insa-lyon.fr";
 
 //----------------------------------------------------- Méthodes publiques
 bool LectureLog::Ouvrir( string nomFichier ){
+// Algorithme :
+// Ouvre le fichier en mode lecture et vérifie le succès de l'opération
     fichier.open( nomFichier , ios::in );
     if (fichier){
         return true;
@@ -51,9 +53,9 @@ bool LectureLog::LireSuivant(){
     derniereActivite.nomUtilisateurAuth = trouveEtPasse(ligne," ");
 
     derniereActivite.date.jour = stoi(trouveEtPasse(ligne,"/").substr(1));
-    string mois = trouveEtPasse(ligne,"/");
+    string nomMois = trouveEtPasse(ligne,"/");
     int indiceMois;
-    for(indiceMois = 0 ; indiceMois<12 && nomMois[indiceMois]!= mois ; indiceMois++){}// boucle vide : s'arretera quand la correspondance avec le mois aura été trouvée
+    for(indiceMois = 0 ; indiceMois<12 && this->nomMois[indiceMois]!= nomMois ; indiceMois++){}// boucle vide : s'arretera quand la correspondance avec le mois aura été trouvée
     derniereActivite.date.mois = indiceMois+1;
 
 

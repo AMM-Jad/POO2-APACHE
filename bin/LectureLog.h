@@ -46,8 +46,8 @@ typedef struct{
 
 //------------------------------------------------------------------------
 // Rôle de la classe <LectureLog>
-//
-//
+// Lecture et analyse des fichiers de logs Apache
+// Extrait les informations de chaque ligne et les structure dans Activité_t
 //------------------------------------------------------------------------
 
 class LectureLog 
@@ -57,50 +57,44 @@ class LectureLog
 public:
 //----------------------------------------------------- Méthodes publiques
     bool Ouvrir ( string nomFichier );
-    // type Méthode ( liste des paramètres );
     // Mode d'emploi :
-    //Ouvre un fichier.log sur un flux
-    // Contrat :
-    //
+    // Ouvre le fichier de log spécifié en lecture
+    // Retourne true si l'ouverture réussit, false sinon
+    // Contrat : Le nom de fichier doit être valide
     bool LireSuivant();
-    // type Méthode ( liste des paramètres );
     // Mode d'emploi :
-    //Lis la prochaine activite et la range dans l'attribut derniereActivite
-    // Contrat :
-    //
+    // Lit la prochaine ligne du fichier de log et parse ses informations
+    // Les données extraites sont stockées dans l'attribut 'derniereActivite'
+    // Retourne true si une ligne a été lue avec succès, false si fin de fichier
+    // Contrat : Le fichier doit être ouvert avec succès au préalable
     Activite_t GetActivite();
-    // type Méthode ( liste des paramètres );
     // Mode d'emploi :
-    //Permet d'acceder a la deriere activite 
-    // Contrat :
+    // Retourne la dernière activité lue depuis le fichier de log
+    // Contrat : LireSuivant() doit avoir été appelé au moins une fois
     
     //------------------------------------------------- Surcharge d'opérateurs
-    LectureLog & operator = ( const LectureLog & unLectureLog );
+    LectureLog & operator = ( const LectureLog & autreLectureLog );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Opérateur d'affectation, copie les données d'un objet LectureLog vers un autre
+    // Contrat : Aucun
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    LectureLog ( const LectureLog & unLectureLog );
+    LectureLog ( const LectureLog & autreLectureLog );
     // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
+    // Crée une copie de l'objet LectureLog passé en paramètre
+    // Contrat : Aucun
 
     LectureLog ( );
     // Mode d'emploi :
-    //Constructeur de LectureLog qui initialise derniereActivite
-    // Contrat :
-    //
+    // Constructeur par défaut, initialise un objet LectureLog
+    // Contrat : Aucun
     
 
     virtual ~LectureLog ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Destructeur, libère les ressources et ferme le fichier s'il est ouvert
+    // Contrat : Aucun
 
 //------------------------------------------------------------------ PRIVE
 

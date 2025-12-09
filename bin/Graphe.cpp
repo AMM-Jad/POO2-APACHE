@@ -29,59 +29,64 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
-bool Graphe::AjouterLien( string labelPre, string labelNoeud , bool details)
+bool Graphe::AjouterLien( string labelSource, string labelCible, bool avecDetails)
+// Algorithme :
+// 1. Si le nœud cible existe déjà, lui ajoute le lien depuis la source
+// 2. Sinon, crée le nœud cible et lui ajoute le lien
+// 3. Si le nœud source n'existe pas, le crée aussi (sans lien entrant)
 {
 
-	if( tableLiens.count(labelNoeud) != 0 ) // ajout de l'accès au noeud déjà présent
+	if( tableLiens.count(labelCible) != 0 ) // ajout de l'accès au noeud déjà présent
 	{
-		tableLiens[labelNoeud].AjouterLien(labelPre, details);
+		tableLiens[labelCible].AjouterLien(labelSource, avecDetails);
 	}
 	else // Ajout du noeud avec un accès vers lui  
 	{
-		Noeud nouveauDoc = Noeud( labelNoeud );
-		nouveauDoc.AjouterLien( labelPre, details );
-		tableLiens.emplace( labelNoeud, nouveauDoc );
+		Noeud nouveauDoc = Noeud( labelCible );
+		nouveauDoc.AjouterLien( labelSource, avecDetails );
+		tableLiens.emplace( labelCible, nouveauDoc );
 		nombreNoeuds++;
 	}
-	// si le labelPre n'est pas dans la table on l'ajoute aussi en tant que Noeud sans accès vers lui
-	if( tableLiens.count(labelPre) == 0 ) //Ajout du noeud avec un accès vers lui
+	// si le labelSource n'est pas dans la table on l'ajoute aussi en tant que Noeud sans accès vers lui
+	if( tableLiens.count(labelSource) == 0 ) //Ajout du noeud avec un accès vers lui
 	{
-		tableLiens.emplace( labelPre, Noeud(labelPre));
+		tableLiens.emplace( labelSource, Noeud(labelSource));
 		nombreNoeuds++;
 	}
 	return true;
 }
 
-const vector < Noeud > Graphe::GetPlusConnectes( int n ) const
+const vector < Noeud > Graphe::GetPlusConnectes( int nombreNoeuds ) const
 // Algorithme:
-// Extrait les documents de la structure pour les trier selon leur nombre d'accès puis par nom
-// Utilisation d'une fonction lambda pour le tri personnalisé
-// Puis extraction d'un sous vecteur de taille voulu
+// 1. Détermine le nombre de nœuds à retourner (limite au total disponible)
+// 2. Extrait tous les nœuds de la map dans un vecteur
+// 3. Utilise partial_sort_copy avec une fonction lambda pour trier par popularité
+// 4. Retourne le vecteur trié des n meilleurs nœuds
 {
-	unsigned int nbRetour = 0;
-	if( n < 0 || (unsigned int)n > nombreNoeuds )
+	unsigned int nbARetourner = 0;
+	if( nombreNoeuds < 0 || (unsigned int)nombreNoeuds > this->nombreNoeuds )
 	{
-		nbRetour = nombreNoeuds;
+		nbARetourner = this->nombreNoeuds;
 	}
 	else
 	{
-		nbRetour = (unsigned int) n;
+		nbARetourner = (unsigned int) nombreNoeuds;
 	}
 	
-	vector < Noeud > tousDocs = vector < Noeud > ( nombreNoeuds);
+	vector < Noeud > tousLesNoeuds = vector < Noeud > ( this->nombreNoeuds);
 	unsigned int i = 0;
 	for (map < string , Noeud > ::const_iterator it = tableLiens.begin(); it != tableLiens.end() ; ++ it )
 	{
-		tousDocs[i] = it->second;
+		tousLesNoeuds[i] = it->second;
 		i++;
 	}
-	vector < Noeud > selection = vector < Noeud> (nbRetour);
-	partial_sort_copy(tousDocs.begin(), tousDocs.end(), selection.begin() , selection.end(), // utilisation d'une fonction lambda
-		[](const Noeud & docA, const Noeud & docB)
+	vector < Noeud > selectionTriee = vector < Noeud> (nbARetourner);
+	partial_sort_copy(tousLesNoeuds.begin(), tousLesNoeuds.end(), selectionTriee.begin() , selectionTriee.end(), // utilisation d'une fonction lambda
+		[](const Noeud & noeudA, const Noeud & noeudB)
 		{
-			return docA > docB;
+			return noeudA > noeudB;
 		});
-	return selection;
+	return selectionTriee;
 	
 }
 

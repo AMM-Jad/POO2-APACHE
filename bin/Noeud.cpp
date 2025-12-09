@@ -27,17 +27,20 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
-void Noeud::AjouterLien( string source , bool details)
+void Noeud::AjouterLien( string sourceReferer, bool avecDetails)
+// Algorithme :
+// Incrémente le compteur total d'accès
+// Si avecDetails est true, ajoute ou incrémente le lien dans la map 'liens'
 {
-    if(details)
+    if(avecDetails)
     {
-        if( liens.count(source) != 0 )
+        if( liens.count(sourceReferer) != 0 )
         {
-            liens[source]++;
+            liens[sourceReferer]++;
         }
         else
         {
-            liens.emplace( source , 1 );
+            liens.emplace( sourceReferer, 1 );
         }
     }
 
@@ -65,11 +68,14 @@ unsigned int Noeud::GetNumNoeud() const
 }
 
 
-int Noeud::GetAccesDepuisSource( string source ) const
+int Noeud::GetAccesDepuisSource( string labelSource ) const
+// Algorithme :
+// Vérifie si la source existe dans la map des liens
+// Retourne le poids du lien si trouvé, -1 sinon
 {
-    if( liens.count( source ) != 0 )
+    if( liens.count( labelSource ) != 0 )
     {
-        return liens.at(source);
+        return liens.at(labelSource);
     }
     return -1;
 }
@@ -82,15 +88,18 @@ int Noeud::GetAccesDepuisSource( string source ) const
 } //----- Fin de operator =*/
 //*/
 
-bool Noeud::operator > ( const Noeud & aComparer ) const 
+bool Noeud::operator > ( const Noeud & noeudAComparer ) const
+// Algorithme :
+// Compare d'abord par nombre d'accès (ordre décroissant)
+// En cas d'égalité, compare par label (ordre lexicographique)
 {
-    if( aComparer.GetNombreLiens() != nombreLiens )
+    if( noeudAComparer.GetNombreLiens() != nombreLiens )
     {
-        return nombreLiens> aComparer.GetNombreLiens();
+        return nombreLiens> noeudAComparer.GetNombreLiens();
     }
     else
     {
-        return label > aComparer.GetLabel();
+        return label > noeudAComparer.GetLabel();
     }
 }
 

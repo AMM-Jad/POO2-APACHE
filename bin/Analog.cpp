@@ -245,17 +245,20 @@ int main( int argc, char ** argv)
 
 //----------------------------------------------------- Méthodes protégées
 
-int getHeure(string strHeure)
+int getHeure(string chaineHeure)
+// Algorithme :
+// Vérifie que tous les caractères sont des chiffres
+// Convertit en entier et vérifie que la valeur est entre 0 et 23
 {
-  for( unsigned int i = 0 ; i < strHeure.size() ; i++)
+  for( unsigned int i = 0 ; i < chaineHeure.size() ; i++)
     {
-  	if( !isdigit( strHeure[i] ) )
+  	if( !isdigit( chaineHeure[i] ) )
     {
       return -1;
     }
   }
 
-  int heure = stoi ( strHeure ) ;
+  int heure = stoi ( chaineHeure ) ;
   if( heure < 0 or heure > 23 ) 
   {
     return -1;
@@ -263,29 +266,37 @@ int getHeure(string strHeure)
   return heure;
 }
 
-bool testOptions( Activite_t aTester,vector < bool (*)(Activite_t & ,ParamsTest) > & filtres, vector < ParamsTest > & refs)
+bool testOptions( Activite_t activiteATester, vector < bool (*)(Activite_t &, ParamsTest) > & filtres, vector < ParamsTest > & parametresFiltres)
+// Algorithme :
+// Parcourt tous les filtres et applique chacun avec ses parametres
+// Retourne false des qu'un filtre n'est pas satisfait
 {
 	for (unsigned int i = 0 ; i < filtres.size() ; i++ )
 	{
-		if(!filtres[i](aTester, refs[ i ] ) )
+		if(!filtres[i](activiteATester, parametresFiltres[ i ] ) )
 		{
 			return false;
 		}
 	}
 	return true;
 }
-bool selectHoraire ( Activite_t & aTester , ParamsTest params)
+bool selectHoraire ( Activite_t & activiteATester, ParamsTest parametres)
+// Algorithme :
+// Compare l'heure de l'activite avec l'heure specifiee dans les parametres
 {
-	return aTester.date.heure == params.intParam;
+	return activiteATester.date.heure == parametres.intParam;
 }
 
-bool selectExtension( Activite_t & aTester , ParamsTest params)
+bool selectExtension( Activite_t & activiteATester, ParamsTest parametres)
+// Algorithme :
+// Verifie si le type du document correspond a une extension a exclure
+// Liste des extensions exclues : js, css, png, jpg, jpeg, gif, tiff, ico
 {
 	static unsigned int nombreExtensions = 8;
 	static string extensions_rejetees[] = {"js","css","png","jpg","jpeg","gif","tiff","ico"};
 	for(unsigned int i = 0 ; i < nombreExtensions ; i++ )
 	{
-		if(aTester.typeDoc == extensions_rejetees[i])
+		if(activiteATester.typeDoc == extensions_rejetees[i])
 		{
 			return false;
 		}
@@ -294,6 +305,9 @@ bool selectExtension( Activite_t & aTester , ParamsTest params)
 }
 
 bool demanderSurEcriture()
+// Algorithme :
+// Affiche un message de confirmation et lit la réponse de l'utilisateur
+// Accepte 'o' ou 'O' comme confirmation
 {
   cout << "Fichier déjà existant, voulez vous l'écraser? [O/n]" << endl;
   string reponse = " ";
@@ -306,6 +320,8 @@ bool demanderSurEcriture()
 }
 
 bool stringEstChiffre( string chaine )
+// Algorithme :
+// Parcourt tous les caractères de la chaîne et vérifie qu'ils sont tous des chiffres
 {
 	for( unsigned int i = 0 ; i < chaine.size() ; i++)
   {

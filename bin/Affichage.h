@@ -24,8 +24,8 @@ enum statutFlux{ VALIDE , ERREUR_OUVERTURE , ERREUR_ECRITURE };
 enum surEcriture{ ANNULER , FORCER };
 //------------------------------------------------------------------------
 // Rôle de la classe <Affichage>
-//
-//
+// Gère l'affichage et l'écriture des résultats dans des fichiers
+// (format GraphViz .dot) ou sur la sortie standard
 //------------------------------------------------------------------------
 
 class Affichage
@@ -35,37 +35,40 @@ class Affichage
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    statutFlux OuvrirFichier( string chemin, surEcriture = ANNULER );
+    statutFlux OuvrirFichier( string chemin, surEcriture comportement = ANNULER );
     // Mode d'emploi : 
-    // Ouvre le flux d'ecriture vers le chemin spécifié
-    // Si un fichier existe deja et que surEcriture est placé sur ANNULER la methode renvoie ERREUR_ECRITURE
-    // Si un fichier ne peut pas être ouvert en écriture la méthode renvoie ERREUR_ECRITURE
-    // Sinon le flux est ouvert est le retour est VALIDE
-    // Contrat :
+    // Ouvre un flux d'écriture vers le fichier spécifié par 'chemin'
+    // Si un fichier existe déjà et que 'comportement' vaut ANNULER, retourne ERREUR_ECRITURE
+    // Si le fichier ne peut pas être ouvert en écriture, retourne ERREUR_OUVERTURE
+    // Sinon, ouvre le flux et retourne VALIDE
+    // Contrat : Le chemin doit être valide
 
     bool EcrireGraphe( const map < string , Noeud > & tableLiens );
     // Mode d'emploi :
-    // Prend en paramètre la map contenant tous les liens entre Noeuds, et la retranscrit au format GrapheViz
-    // Contrat : 
-    // 
+    // Écrit le graphe complet au format GraphViz (DOT) dans le fichier ouvert
+    // 'tableLiens' contient l'ensemble des nœuds et leurs connexions
+    // Retourne true si l'écriture réussit, false sinon
+    // Contrat : Un fichier doit avoir été ouvert avec succès au préalable 
 
     bool EcrireSousGraphe( const vector < Noeud > & sousGraphe);
     // Mode d'emploi : 
-    // Dessine uniquement les liens entre les noeuds contenues dans le sous graphe dans le fichier .dot spécifié à l'ouverture
-    // Contrat : 
-    // 
+    // Écrit un sous-graphe au format GraphViz contenant uniquement les nœuds spécifiés
+    // et les liens existants entre eux dans le fichier ouvert précédemment
+    // Retourne true si l'écriture réussit, false sinon
+    // Contrat : Un fichier doit avoir été ouvert avec succès au préalable 
 
 
     void FermerFichier();
     // Mode d'emploi : 
-    // Ferme le flux ouvert
-    // Contrat : 
-    // Le flux est bien ouvert
+    // Ferme le flux d'écriture s'il est ouvert
+    // Contrat : Aucun (la méthode vérifie si le flux est ouvert)
 
     void AfficherListe( const vector < Noeud > & listeNoeuds );
     // Mode d'emploi : 
-    // Affiche le nom et le nombre de liens des Noeuds dans le conteneur, dans l'ordre
-    // Contrat : 
+    // Affiche sur la sortie standard le label et le nombre d'accès de chaque nœud
+    // Les nœuds sont affichés dans l'ordre du vecteur fourni
+    // Format : "label (nombre hits)"
+    // Contrat : Aucun 
 //------------------------------------------------- Surcharge d'opérateurs
     /*Affichage & operator = ( const Affichage & unAffichage );
     // Mode d'emploi :
@@ -77,21 +80,18 @@ public:
 //-------------------------------------------- Constructeurs - destructeur
     Affichage ( const Affichage & unAffichage );
     // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
+    // Crée une copie de l'objet Affichage passé en paramètre
+    // Contrat : Aucun
 
     Affichage ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Constructeur par défaut, initialise un objet Affichage
+    // Contrat : Aucun
 
     virtual ~Affichage ( );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Destructeur, libère les ressources et ferme les flux ouverts
+    // Contrat : Aucun
 
 //------------------------------------------------------------------ PRIVE
 
