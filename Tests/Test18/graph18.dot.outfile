@@ -1,5 +1,0 @@
-digraph  {
-node1 [label = "/docA.html"];
-node0 [label = "/docB.html"];
-node1 -> node0 [label="1"];
-}
