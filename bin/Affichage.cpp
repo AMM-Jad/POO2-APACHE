@@ -1,8 +1,8 @@
 /*************************************************************************
                            Affichage  -  Manipule les sorties du logiciel
                              -------------------
-    début                : 01/19
-    copyright            : (C) 2019 par Gadacha A, Tondereau A
+    début                : 03/12
+    copyright            : (C) 2025 par Ammydriss Jad, Essaki Mohammed, EL HABI Aymane
 *************************************************************************/
 
 //---------- Réalisation de la classe <Affichage> (fichier Affichage.cpp) ------------

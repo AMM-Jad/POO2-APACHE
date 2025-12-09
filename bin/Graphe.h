@@ -1,8 +1,8 @@
 /*************************************************************************
                            Graphe  -  Encapsule la structure d'un graphe orienté
                              -------------------
-    début                : 01/19
-    copyright            : (C) 2019 par Gadacha A, Tondereau A
+    début                : 03/12
+    copyright            : (C) 2025 par Ammydriss Jad, Essaki Mohammed, EL HABI Aymane
 *************************************************************************/
 
 //---------- Interface de la classe <Graphe> (fichier Graphe.h) ----------------

@@ -50,14 +50,6 @@ Structure du dépôt (extrait)
 - `LogDeTests/` : historiques ou sorties de tests.
 - `manpage` : page de manuel exécutable via `man ./manpage`.
 
-Besoin d'aide ?
----------------
-Si vous voulez :
-- une version anglaise du README,
-- l'ajout d'exemples d'exécution précis (noms des exécutables, options),
-- ou que j'adapte les scripts pour PowerShell/Windows,
-indiquez-le et je m'en occupe.
-
 Licence / Auteurs
 ------------------
 Travail réalisé par le trinôme B01 — voir les auteurs listés en début de fichier.

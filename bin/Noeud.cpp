@@ -1,8 +1,8 @@
 /*************************************************************************
                            Noeud  -  Encapsule les attributs et les actions sur un noeud de graphe orienté ou non
                              -------------------
-    début                : 01/19
-    copyright            : (C) 2019 par Gadacha A, Tondereau A
+    début                : 03/12
+    copyright            : (C) 2025 par Ammydriss Jad, Essaki Mohammed, EL HABI Aymane
 *************************************************************************/
 
 //---------- Réalisation de la classe <Noeud> (fichier Noeud.cpp) ------------
