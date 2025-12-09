@@ -33,81 +33,30 @@ Compilation et nettoyage
 
 	`make clean`
 
-4. Pour exécuter les tests automatiques :
-
-	`make run`
-
 Si vous n'utilisez pas `make`, compilez manuellement les sources dans `bin/` avec `g++` (ex. `g++ -std=c++17 -O2 -o monprog *.cpp`).
 
 Exécution des tests
 -------------------
-Deux méthodes sont disponibles pour exécuter les tests automatiques :
+- Depuis le répertoire racine du dépôt, vous pouvez exécuter la suite de tests fournie :
 
-### Méthode 1 : Via le Makefile (recommandé)
-Depuis le dossier `bin/` :
+  `cd Tests && ./mktest.sh`
 
-```bash
-make run
-```
-
-### Méthode 2 : Exécution directe
-Depuis le répertoire racine du dépôt :
-
-```bash
-cd Tests && ./mktest.sh
-```
-
-(Ces scripts sont des scripts shell — exécutez-les dans WSL/MSYS ou adaptez-les pour PowerShell si nécessaire.)
+  (Ces scripts sont des scripts shell — exécutez-les dans WSL/MSYS ou adaptez-les pour PowerShell si nécessaire.)
 
 Structure du dépôt (extrait)
 ---------------------------
 - `bin/` : code source C++ et `makefile`.
 - `Tests/` : jeux de tests et scripts d'exécution.
-- `LogDeTests/` : fichiers de logs Apache de test (voir section ci-dessous).
+- `LogDeTests/` : historiques ou sorties de tests.
 - `manpage` : page de manuel exécutable via `man ./manpage`.
 
-Dossier LogDeTests
-------------------
-Le dossier `LogDeTests/` contient des fichiers de logs Apache au format standard, utilisés comme données d'entrée pour tester le programme `analog`.
-
-### Contenu
-Chaque fichier `.log` contient des lignes au format Apache :
-```
-192.168.0.0 - - [08/Sep/2012:11:16:02 +0200] "GET /docB.html HTTP/1.1" 200 12106 "/docA.html" "Mozilla/5.0"
-```
-
-Ces fichiers permettent de simuler différents scénarios :
-- Navigation entre plusieurs pages web
-- Requêtes sur différentes ressources (HTML, images, CSS, JS)
-- Requêtes à différentes heures et dates
-
-### Utilisation
-Pour tester manuellement le programme avec un fichier de log :
-
-```bash
-cd bin
-./analog ../LogDeTests/log1.log
-```
-
-Pour générer un graphe au format DOT :
-
-```bash
-./analog -g graphe.dot ../LogDeTests/log1.log
-```
-
-Pour filtrer par heure (ex. 11h) :
-
-```bash
-./analog -t 11 ../LogDeTests/log1.log
-```
-
-Pour afficher les N pages les plus consultées :
-
-```bash
-./analog -n 5 ../LogDeTests/log1.log
-```
-
-Ces fichiers sont également utilisés automatiquement par les scripts de tests dans `Tests/`.
+Besoin d'aide ?
+---------------
+Si vous voulez :
+- une version anglaise du README,
+- l'ajout d'exemples d'exécution précis (noms des exécutables, options),
+- ou que j'adapte les scripts pour PowerShell/Windows,
+indiquez-le et je m'en occupe.
 
 Licence / Auteurs
 ------------------

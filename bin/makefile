@@ -15,8 +15,4 @@ clean :
 	@echo "suppresion des fichiers compilés existants"
 	touch t.o
 	rm *.o
-
-run :
-	@echo "Exécution des tests automatiques"
-	cd ../Tests && ./mktest.sh
-	
+	make
