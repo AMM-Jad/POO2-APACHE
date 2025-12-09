@@ -1,0 +1,1 @@
+Ce test permet de vérifier la production d'un fichier affichant les 15 documents les plus consultés en sortie lorsqu'un fichier log en contient moins. Il s'agit de vérifier qu'ils soient tous renvoyés.

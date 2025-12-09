@@ -1,0 +1,1 @@
+Ce test permet de verifier qu'on obtient la réponse 'Erreur d'ouverture' lorsque la commande est lancé avec un fichier log qui n'existe pas
