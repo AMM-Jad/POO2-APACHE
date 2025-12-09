@@ -1,0 +1,1 @@
+../../bin/analog -g graph18.dot ../../LogDeTests/log18.log

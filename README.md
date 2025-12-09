@@ -33,15 +33,31 @@ Compilation et nettoyage
 
 	`make clean`
 
+4. Pour exécuter les tests automatiques :
+
+	`make run`
+
 Si vous n'utilisez pas `make`, compilez manuellement les sources dans `bin/` avec `g++` (ex. `g++ -std=c++17 -O2 -o monprog *.cpp`).
 
 Exécution des tests
 -------------------
-- Depuis le répertoire racine du dépôt, vous pouvez exécuter la suite de tests fournie :
+Deux méthodes sont disponibles pour exécuter les tests automatiques :
 
-  `cd Tests && ./mktest.sh`
+### Méthode 1 : Via le Makefile (recommandé)
+Depuis le dossier `bin/` :
 
-  (Ces scripts sont des scripts shell — exécutez-les dans WSL/MSYS ou adaptez-les pour PowerShell si nécessaire.)
+```bash
+make run
+```
+
+### Méthode 2 : Exécution directe
+Depuis le répertoire racine du dépôt :
+
+```bash
+cd Tests && ./mktest.sh
+```
+
+(Ces scripts sont des scripts shell — exécutez-les dans WSL/MSYS ou adaptez-les pour PowerShell si nécessaire.)
 
 Structure du dépôt (extrait)
 ---------------------------
